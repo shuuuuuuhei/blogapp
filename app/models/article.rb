@@ -18,7 +18,6 @@ class Article < ApplicationRecord
     #独自のルール
     validate :validate_title_end_content_length
 
-
     def display_created_at
         I18n.l(self.created_at, format: :default)
     end
