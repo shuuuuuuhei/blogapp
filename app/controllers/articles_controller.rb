@@ -6,10 +6,10 @@ class ArticlesController < ApplicationController
     end
 
     def show
-
+        @comments = @article.comments
     end
     def new
-        @article = current_user.articles.build(params[:id])
+        @article = current_user.articles.build
     end
     def create
         @article = current_user.articles.build(article_params)
