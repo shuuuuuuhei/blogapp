@@ -22,7 +22,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :articles, dependent: :destroy
+  has_many :articles, dependent: :destroy #1対多
+  has_one :profile #1対1
 
   def has_written?(article)
     articles.exists?(id: article.id)
@@ -31,5 +32,9 @@ class User < ApplicationRecord
   def display_name
     self.email.split('@').first
       # => ['choki2010', 'gmail.com']
+  end
+
+  def prepare_profile
+    profile || build_profile
   end
 end
