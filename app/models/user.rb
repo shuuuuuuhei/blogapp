@@ -22,14 +22,30 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :articles, dependent: :destroy
+  has_many :articles, dependent: :destroy #1対多
+  has_one :profile #1対1
+
+  #delegateメソッド
+  delegate :birthday, :gender, :age, to: :profile, allow_nil: true
 
   def has_written?(article)
     articles.exists?(id: article.id)
   end
 
   def display_name
-    self.email.split('@').first
-      # => ['choki2010', 'gmail.com']
+    #ぼっち演算子
+    profile&.nickname || self.email.split('@').first
+  end
+
+  def prepare_profile
+    profile || build_profile
+  end
+
+  def avatar_image
+    if profile&.avatar&.attached?
+      profile.avatar
+    else
+      'default-avatar.png'
+    end
   end
 end
