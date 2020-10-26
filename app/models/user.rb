@@ -23,6 +23,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :articles, dependent: :destroy #1対多
+  has_many :likes, dependent: :destroy
   has_one :profile #1対1
 
   #delegateメソッド
