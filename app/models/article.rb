@@ -15,6 +15,7 @@
 #
 class Article < ApplicationRecord
     has_one_attached :eyecatch
+    has_rich_text :content
 
     validates :title, presence: true
     validates :content, presence: true
