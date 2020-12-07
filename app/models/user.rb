@@ -25,6 +25,13 @@ class User < ApplicationRecord
   has_many :articles, dependent: :destroy #1対多
   has_many :likes, dependent: :destroy
   has_many :favorite_articles, through: :likes, source: :article
+
+  #followの紐付きの関係を示す
+  has_many :following_relationships, foreign_key: 'follower_id', class_name: 'Relationship', dependent: :destroy
+  has_many :followings, through: :following_relationships, source: :following
+
+  has_many :follower_relationships, foreign_key: 'following_id', class_name: 'Relationship', dependent: :destroy
+  has_many :followers, through: :follower_relationships, source: :follower
   has_one :profile #1対1
 
   #delegateメソッド
@@ -52,6 +59,29 @@ class User < ApplicationRecord
       profile.avatar
     else
       'default-avatar.png'
+    end
+  end
+
+  def follow!(user)
+    following_relationships.create!(following_id: get_user_id(user))
+  end
+
+  def has_followed?(user)
+    following_relationships.exists?(following_id: user.id)
+  end
+
+  def unfollow!(user)
+    get_user_id(user)
+    relation = following_relationships.find_by!(following_id: get_user_id(user))
+    relation.destroy
+  end
+
+  private
+  def get_user_id(user)
+    if user.is_a?(User)
+      user.id
+    else
+      user
     end
   end
 end
