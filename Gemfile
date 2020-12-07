@@ -27,6 +27,7 @@ gem 'faker'
 gem 'hamlit'
 gem 'aws-sdk-s3', require: false
 gem 'mini_magick'
+gem 'active_decorator'
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
 
