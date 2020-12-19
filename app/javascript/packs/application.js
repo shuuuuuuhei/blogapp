@@ -6,6 +6,7 @@
 require("@rails/ujs").start()
 require("@rails/activestorage").start()
 require("channels")
+require("turbolinks").start()
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
@@ -26,6 +27,11 @@ document.addEventListener('turbolinks:load', () => {
     const articleId = dataset.articleId
     axios.get(`/articles/${articleId}/like`)
         .then((response) => {
-            console.log(response)
+            const hasLiked = response.data.hasLiked
+            if (hasLiked) {
+                $('.active-heart').removeClass('hidden')
+            } else {
+                $('.inactive-heart').removeClass('hidden')
+            }
         })
 })
