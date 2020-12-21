@@ -1,5 +1,6 @@
 #
 # == Schema Information
+#
 # Table name: relationships
 #
 #  id           :bigint           not null, primary key
@@ -10,8 +11,8 @@
 #
 # Indexes
 #
-#  index_relationsips_on_follower_id   (follower_id)
-#  index_relationsips_on_following_id  (following_id)
+#  index_relationships_on_follower_id   (follower_id)
+#  index_relationships_on_following_id  (following_id)
 #
 # Foreign Keys
 #
