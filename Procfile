@@ -1,2 +1,3 @@
 web: bundle exec puma -C config/puma.rb
-relese: bundle exec rake db:migrate
+worker: bundle exec sidekiq
+release: bundle exec rake db:migrate
